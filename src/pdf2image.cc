@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
     }
     exit(1);
   }
- 
+
   // read config file
   globalParams = new GlobalParams("");
 
@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
   if (textEncName[0]) {
     globalParams->setTextEncoding(textEncName);
     if( !globalParams->getTextEncoding() )  {
-	goto error;    
+	goto error;
     }
   }
 
@@ -183,12 +183,12 @@ int main(int argc, char *argv[]) {
   if (argc == 3) {
     GString* tmp = new GString(argv[2]);
     p=tmp->getCString()+tmp->getLength()-5;
-   
+
     if (!strcmp(p, ".xml") || !strcmp(p, ".XML"))
 	htmlFileName = new GString(tmp->getCString(),
 				   tmp->getLength() - 5);
     else htmlFileName =new GString(tmp);
-    
+
     delete tmp;
   } else {
     p = fileName->getCString() + fileName->getLength() - 4;
@@ -198,13 +198,13 @@ int main(int argc, char *argv[]) {
     else
       htmlFileName = fileName->copy();
   }
-  
+
    // That’s retarded.  Arthur 2012-06-29.
    /*
    if (scale>3.0) scale=3.0;
    if (scale<0.5) scale=0.5;
    */
-   
+
    stout=gFalse;
    complexMode = gTrue;
    noframes = gTrue;
@@ -241,27 +241,27 @@ int main(int argc, char *argv[]) {
   }}
 
   rawOrder = complexMode; // todo: figure out what exactly rawOrder do :)
-  
+
   if(textAsJSON)
 	xml = gTrue;
 
   // write text file
-  htmlOut = new ImgOutputDev(htmlFileName->getCString(), 
-	  docTitle->getCString(), 
+  htmlOut = new ImgOutputDev(htmlFileName->getCString(),
+	  docTitle->getCString(),
 	  author ? author->getCString() : NULL,
-	  keywords ? keywords->getCString() : NULL, 
-          subject ? subject->getCString() : NULL, 
+	  keywords ? keywords->getCString() : NULL,
+          subject ? subject->getCString() : NULL,
 	  date ? date->getCString() : NULL,
 	  extension,
 	  rawOrder,
 	  textAsJSON,
-	  compressData, 
+	  compressData,
 	  firstPage,
 	  doc->getCatalog()->getOutline()->isDict(),
 	  doc->getNumPages());
   delete docTitle;
   if( author )
-  {   
+  {
       delete author;
   }
   if( keywords )
@@ -280,13 +280,13 @@ int main(int argc, char *argv[]) {
   if (htmlOut->isOk())
   {
 	doc->displayPages(htmlOut, firstPage, lastPage, static_cast<int>(72*scale), static_cast<int>(72*scale), 0, gTrue, gTrue,gTrue,NULL);
-  	
+
 	if (!xml)
 	{
 		htmlOut->dumpDocOutline(doc->getCatalog());
 	}
   }
-  
+
   if( !ignore ) {
     int h=xoutRound(htmlOut->getPageHeight()/scale);
     int w=xoutRound(htmlOut->getPageWidth()/scale);
@@ -344,7 +344,7 @@ int main(int argc, char *argv[]) {
     delete gsCmd;
     delete psFileName;
   }
-  
+
   delete htmlOut;
 
   // clean up
@@ -354,7 +354,7 @@ int main(int argc, char *argv[]) {
 
   if(htmlFileName) delete htmlFileName;
   XmlFont::clear();
-  
+
   // check for memory leaks
   Object::memCheck(stderr);
   gMemReport(stderr);
