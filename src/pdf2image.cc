@@ -199,8 +199,11 @@ int main(int argc, char *argv[]) {
       htmlFileName = fileName->copy();
   }
   
+   // That’s retarded.  Arthur 2012-06-29.
+   /*
    if (scale>3.0) scale=3.0;
    if (scale<0.5) scale=0.5;
+   */
    
    stout=gFalse;
    complexMode = gTrue;
@@ -320,13 +323,21 @@ int main(int argc, char *argv[]) {
     th = GString::fromInt(static_cast<int>(scale*h));
     gsCmd->append(th);
     gsCmd->append(" -q \"");
-    gsCmd->append(psFileName);
+    // As per http://code.google.com/p/pdf2image/issues/detail?id=4#c8
+    // Arthur, 2012-06-29.
+    // gsCmd->append(psFileName);
+    gsCmd->append(fileName);
     gsCmd->append("\"");
+
+    printf("--- DEBUG ---\n");
+    printf("Launching Ghostscript with command:\n");
+    printf("%s\n", gsCmd->getCString());
+    printf("--- DEBUG --\n");
 
     if( !executeCommand(gsCmd->getCString()) && !errQuiet) {
       error(-1, "Failed to launch Ghostscript!\n");
     }
-    unlink(psFileName->getCString());
+    // unlink(psFileName->getCString());
     delete tw;
     delete th;
     delete sc;
