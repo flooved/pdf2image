@@ -1,5 +1,13 @@
 Makefile
 *.o
+*.a
 aconf.h
 config.log
 config.status
+src/pdf2image
+src/pdf2image
+xpdf/pdffonts
+xpdf/pdfimages
+xpdf/pdfinfo
+xpdf/pdftops
+xpdf/pdftotext
