@@ -20,6 +20,11 @@ INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_DATA = ${INSTALL} -m 644
 
+# Suppress the “deprecated conversion from string constant to ‘char*’” warnings.
+# This makes the build system unusable with compilers that don’t support
+# this switch FIXME – Arthur
+CXXFLAGS = -Wno-write-strings
+
 EXE =
 
 all:
